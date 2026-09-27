@@ -1831,6 +1831,7 @@
         <button type="button" class="footer-link-btn" onclick="openFooterModal('intent')">기획의도 · 만든 사람</button>
         <span class="footer-sep">·</span>
         <button type="button" class="footer-link-btn" onclick="openLibrary()">쉼의 서재 (추천 도서)</button>
+        <button type="button" class="footer-link-btn footer-support" onclick="openSupport()" style="display:none">🍵 따뜻한 차 한 잔으로 응원하기</button>
       </div>
       <div class="social-row"></div>
       <div style="font-weight: 600; margin-bottom: 3px;">&copy; 2026 Space of Mind. All rights reserved.</div>
@@ -2399,6 +2400,7 @@
           <button type="button" class="outro-btn" onclick="resetTest()">처음부터 다시 하기</button>
           <button type="button" class="outro-btn" onclick="shareResult()">소중한 이에게 쉼표 선물</button>
           <button type="button" class="outro-btn" onclick="openLibrary()">쉼의 서재 둘러보기</button>
+        <button type="button" class="outro-btn" id="support-btn" onclick="openSupport()" style="background:rgba(242,184,114,0.18);border:1px solid rgba(242,184,114,0.45);color:#f2b872;display:none"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>따뜻한 차 한 잔</button>
         </div>
       </div>
 
@@ -2429,6 +2431,7 @@
         <button type="button" class="footer-link-btn" onclick="openFooterModal('intent')">기획의도 · 만든 사람</button>
         <span class="footer-sep">·</span>
         <button type="button" class="footer-link-btn" onclick="openLibrary()">쉼의 서재 (추천 도서)</button>
+        <button type="button" class="footer-link-btn footer-support" onclick="openSupport()" style="display:none">🍵 따뜻한 차 한 잔으로 응원하기</button>
       </div>
       <div class="social-row"></div>
       <div class="crisis-line"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>지금 많이 힘들다면: 정신건강위기상담 1577-0199 · 자살예방상담 109 (24시간)</div>
@@ -2628,7 +2631,7 @@
   /* ===== 설정 ===== */
   // TODO: 문의 전용 메일 주소가 생기면 여기만 바꾸면 됩니다.
   // 주의: 이 주소는 페이지 소스와 메일 앱에서 보입니다. 익명 운영 시 도메인 메일(예: hello@spaceofmind.kr)로 바꿔주세요.
-  var CONTACT_EMAIL = "keh0818@naver.com";
+  var CONTACT_EMAIL = "spaceofmind.2026@gmail.com";
 
   if (!CanvasRenderingContext2D.prototype.roundRect) {
     CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
@@ -4147,8 +4150,9 @@
   /* 실시간 후기: 구글 시트의 '게시용' 탭을 CSV로 웹에 게시한 주소를 넣으세요.
      (열 순서: 후기 내용, 작성자 정보, 도움된 공간 / 첫 줄은 제목 줄) 비워두면 아래 REVIEWS만 보여요. */
   var REVIEWS_CSV_URL = '';
+  var SUPPORT_URL = 'https://ctee.kr/place/spaceofmind';
   var REVIEWS = [
-    { text: '제 현재 상황에 대입해서 대화들을 연습해볼때 실제로 좀 울컥해서 눈물이 났어요. 실제로 사용할 수 있게 되기까지는 앞으로 더 시간이 흐르고 많은 용기가 필요할것 같아요. 이 공간만으로 큰 위로가 되었습니다. 만들어주셔서 감사합니다.', who: '영상업계 · 30대', space: '단단한 서재' }
+    { text: '제 현재 상황에 대입해서 대화들을 대입해서 연습할때 실제로 좀 울컥해서 눈물이 났어요. 실제로 사용할 수 있으려면 많은 용기가 필요할것 같아요. 이 공간만으로 큰 위로가 되었습니다. 만들어주셔서 감사합니다.', who: '영상업계 · 30대', space: '단단한 서재' }
   ];
   /* 소셜 바로가기: 주소를 비워두면 해당 버튼이 숨겨집니다. */
   var X_URL = '';
@@ -4158,6 +4162,8 @@
     if (INSTAGRAM_URL) links.push('<a href="' + INSTAGRAM_URL + '" target="_blank" rel="noopener" aria-label="인스타그램" title="인스타그램"><svg aria-hidden="true"><use href="#i-insta"/></svg></a>');
     if (X_URL) links.push('<a href="' + X_URL + '" target="_blank" rel="noopener" aria-label="X" title="X"><span class="x-mark" aria-hidden="true">X</span></a>');
     var html = links.join('');
+    var sb=document.getElementById('support-btn');if(sb)sb.style.display=SUPPORT_URL?'':'none';
+    document.querySelectorAll('.footer-support').forEach(function(b){b.style.display=SUPPORT_URL?'':'none';});
     var rail = document.querySelector('.social-rail');
     if (rail) { rail.innerHTML = html; rail.classList.toggle('has-links', links.length > 0); }
     document.querySelectorAll('.social-row').forEach(function(r) { r.innerHTML = html; });
@@ -4181,6 +4187,10 @@
   function openReviewForm() {
     if (!REVIEW_FORM_URL) { showCbtToast('후기 창구를 준비하고 있어요. 조금만 기다려 주세요.'); return; }
     window.open(REVIEW_FORM_URL, '_blank', 'noopener');
+  }
+
+  function openSupport() {
+    if (SUPPORT_URL) window.open(SUPPORT_URL, '_blank', 'noopener');
   }
 
   function openInstagram() {
@@ -4927,7 +4937,10 @@
 제3조 (문의하기 이용 시 처리)
 '이야기 남기기'는 이용자의 메일 앱을 통해 발송되며, 이때 전달된 이름·연락처·내용은 답변 목적으로만 사용하고, 이용자가 요청하면 지체 없이 파기합니다.
 
-제3조의2 (후기 남기기 이용 시 처리)
+제3조의2 (후원 이용 시 처리)
+'따뜻한 차 한 잔으로 응원하기'를 누르면 외부 플랫폼(크티)으로 연결됩니다. 사이트는 후원자 정보를 받거나 저장하지 않으며, 결제 및 정산은 크티의 정책에 따릅니다.
+
+제3조의3 (후기 남기기 이용 시 처리)
 '후기 남기기'는 외부 설문 서비스 Tally로 연결되며, 남겨주신 내용은 해당 서비스에 저장됩니다. 이름·연락처는 받지 않으며, 게시에 동의한 후기만 회사명·사람 이름 등 개인을 알아볼 수 있는 정보를 지운 뒤 익명으로 사이트나 공식 SNS에 소개합니다. 게시된 후기의 삭제를 원하시면 '이야기 남기기'로 요청해 주세요.
 
 제4조 (외부 서비스 이용)
