@@ -1423,8 +1423,8 @@
     .ladder input { width: 16px; height: 16px; }
 
     /* PDF 리포트 (화면 밖에서 렌더링) */
-    #pdf-report-wrap { position: fixed; left: -12000px; top: 0; width: 760px; background: #fff; }
-    .rp { width: 760px; box-sizing: border-box; padding: 36px 40px; background: #fff; color: #1e293b; font-size: 13px; line-height: 1.7; }
+    #pdf-report-wrap { position: fixed; left: -12000px; top: 0; width: 718px; background: #fff; }
+    .rp { width: 718px; box-sizing: border-box; padding: 28px 30px; background: #fff; color: #1e293b; font-size: 13px; line-height: 1.7; }
     .rp h1 { font-size: 22px; margin-bottom: 2px; }
     .rp .rp-sub { font-size: 13px; color: #64748b; margin-bottom: 18px; }
     .rp h2 { font-size: 15px; color: #4A5F7E; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 2px solid #e1ecfa; }
@@ -4159,7 +4159,7 @@
       margin: [10, 10, 12, 10],
       filename: fileName,
       image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: { scale: isSmall ? 1.5 : 2, backgroundColor: '#ffffff', windowWidth: 800, width: 760, scrollX: 0, scrollY: 0, useCORS: true },
+      html2canvas: { scale: isSmall ? 1.5 : 2, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0, useCORS: true },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'], avoid: ['.pdf-avoid', 'tr', '.rp-card', '.rp-kpi', 'h2', 'li'] }
     }).from(wrap.firstChild).save().then(function() {
