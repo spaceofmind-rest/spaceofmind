@@ -4144,7 +4144,12 @@
        { text: '후기 내용', who: '간호사 · 20대 (선택)', space: '거실의 창가 (선택)' } */
   var REVIEW_FORM_URL = 'https://tally.so/r/KYbjvX';
   var INSTAGRAM_URL = 'https://www.instagram.com/spaceofmind_rest/';
-  var REVIEWS = [];
+  /* 실시간 후기: 구글 시트의 '게시용' 탭을 CSV로 웹에 게시한 주소를 넣으세요.
+     (열 순서: 후기 내용, 작성자 정보, 도움된 공간 / 첫 줄은 제목 줄) 비워두면 아래 REVIEWS만 보여요. */
+  var REVIEWS_CSV_URL = '';
+  var REVIEWS = [
+    { text: '제 현재 상황에 대입해서 대화들을 대입해서 연습할때 실제로 좀 울컥해서 눈물이 났어요. 실제로 사용할 수 있으려면 많은 용기가 필요할것 같아요. 이 공간만으로 큰 위로가 되었습니다. 만들어주셔서 감사합니다.', who: '영상업계 · 30대', space: '단단한 서재' }
+  ];
   /* 소셜 바로가기: 주소를 비워두면 해당 버튼이 숨겨집니다. */
   var X_URL = '';
 
@@ -4165,7 +4170,7 @@
       box.innerHTML = '<div class="story-empty">아직 남겨진 이야기가 없어요.<br>이곳에서 잠시 쉬어가셨다면, 첫 후기를 남겨주세요.</div>';
     } else {
       box.innerHTML = REVIEWS.map(function(r) {
-        var meta = [r.who, r.space ? r.space + '이 도움이 됐어요' : ''].filter(Boolean).join(' · ');
+        var meta = [r.who, r.space ? r.space + (((r.space.charCodeAt(r.space.length - 1) - 0xAC00) % 28) ? '이' : '가') + ' 도움이 됐어요' : ''].filter(Boolean).join(' · ');
         return '<div class="story"><div class="story-text">' + escapeHtml(r.text) + '</div>' + (meta ? '<div class="story-meta">' + escapeHtml(meta) + '</div>' : '') + '</div>';
       }).join('');
     }
@@ -4182,7 +4187,42 @@
     if (INSTAGRAM_URL) window.open(INSTAGRAM_URL, '_blank', 'noopener');
   }
 
+  function parseCsv(text) {
+    var rows = [], row = [], cell = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (q) {
+        if (ch === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else { q = false; } }
+        else cell += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ',') { row.push(cell); cell = ''; }
+      else if (ch === '\n' || ch === '\r') {
+        if (ch === '\r' && text[i + 1] === '\n') i++;
+        row.push(cell); rows.push(row); row = []; cell = '';
+      } else cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  function loadLiveReviews() {
+    if (!REVIEWS_CSV_URL || !window.fetch) return;
+    fetch(REVIEWS_CSV_URL + (REVIEWS_CSV_URL.indexOf('?') > -1 ? '&' : '?') + 't=' + Date.now())
+      .then(function(r) { return r.ok ? r.text() : ''; })
+      .then(function(t) {
+        if (!t) return;
+        var seen = {};
+        REVIEWS.forEach(function(r) { seen[r.text] = true; });
+        var live = parseCsv(t).slice(1).map(function(c) {
+          return { text: (c[0] || '').trim(), who: (c[1] || '').trim(), space: (c[2] || '').replace(/\s*\(.*\)\s*$/, '').trim() };
+        }).filter(function(r) { return r.text && !seen[r.text]; });
+        if (live.length) { REVIEWS = live.reverse().concat(REVIEWS); renderStories(); }
+      })
+      .catch(function() {});
+  }
+
   renderStories();
+  loadLiveReviews();
 
   /* ===== 거실 하위 탭 / 접기 / 저장 선택 창 ===== */
   function setCbtTab(t) {
