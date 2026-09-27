@@ -10,6 +10,10 @@
   <meta property="og:url" content="https://spaceofmind.kr/">
   <meta property="og:title" content="Space of Mind | 직장인 마음 쉼터">
   <meta property="og:description" content="일에 지친 마음이 잠깐 쉬어가는 방. 무료 직장인 마음 자가점검과 경계선·회복 연습.">
+<!-- 웹폰트: 제목 고운바탕 + 본문 Noto Sans KR (Google Fonts, OFL 무료) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
 <!-- Chart.js CDN (버전 고정) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <!-- PDF 리포트 저장용 (html2pdf.js, 버전 고정) -->
@@ -31,7 +35,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      font-family: var(--font-body);
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -1563,6 +1567,9 @@
     .tech-head .ic-badge { margin: 0; }
 
     /* 강조 */
+    :root { --font-body: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; --font-head: "Gowun Batang", "Noto Serif KR", "Noto Serif CJK KR", "AppleMyungjo", serif; }
+    h1, h2, h3, h4, .modal-title, .result-score-tag, .lib-letter .sign, .ls-text b, .rp h1, .rp h2 { font-family: var(--font-head); letter-spacing: -0.01em; }
+    .result-score-tag { font-weight: 700; }
     :root { --accent: #e0916b; --accent-soft: #fbe7da; }
     .hl { background: linear-gradient(transparent 58%, #f9d6c1 58%); padding: 0 2px; font-weight: 700; color: #1e293b; }
     .key-message { position: relative; background: #fffaf6; border: 1px solid #f3dccd; border-left: 4px solid var(--accent); border-radius: 12px; padding: 18px 18px 16px 18px; margin-bottom: 18px; }
@@ -1711,7 +1718,65 @@
       text-align: left;
       word-break: keep-all;
     }
-  </style>
+      /* ===== 침실: 무드등 앰버 (밤 모드) ===== */
+    body { transition: background-color .8s ease; }
+    .container, .top-nav-bar, header, .step-card { transition: background-color .8s ease, border-color .8s ease, color .8s ease; }
+    body.night-room { --n-page: #1f222c; --n-bg: #262a36; --n-card: #30354a; --n-card2: #2b3041; --n-line: #434a61; --n-text: #f4ecdf; --n-sub: #c9c1b3; --n-acc: #f2b872; --n-acc-text: #2b2418; --n-chip: #353b50; background-color: var(--n-page) !important; }
+    body.night-room .container { background-color: var(--n-bg) !important; background-image: radial-gradient(circle at 88% 2%, rgba(242,184,114,0.26) 0, rgba(242,184,114,0.08) 24%, rgba(38,42,54,0) 48%) !important; border-color: var(--n-line) !important; box-shadow: none !important; color: var(--n-text); }
+    body.night-room .top-nav-bar { background: transparent !important; border-color: var(--n-line) !important; }
+    body.night-room .brand-text { color: var(--n-text) !important; }
+    body.night-room .top-badge { background: var(--n-chip) !important; color: var(--n-acc) !important; }
+    body.night-room .nav-lib-btn, body.night-room .action-badge-btn { background: var(--n-chip) !important; background-image: none !important; border: 1px solid var(--n-line) !important; color: var(--n-text) !important; box-shadow: none !important; }
+    body.night-room header { background: transparent !important; border-color: var(--n-line) !important; }
+    body.night-room header h1, body.night-room header h2 { color: var(--n-text) !important; }
+    body.night-room header p { color: var(--n-sub) !important; }
+    body.night-room .creator-tag { background: var(--n-chip) !important; color: var(--n-sub) !important; border-color: var(--n-line) !important; }
+    body.night-room .step-nav { background: transparent !important; border-color: var(--n-line) !important; }
+    body.night-room .step-card { background: var(--n-card2) !important; border-color: var(--n-line) !important; box-shadow: none !important; }
+    body.night-room .step-card .step-num { color: var(--n-sub) !important; }
+    body.night-room .step-card .step-title { color: var(--n-text) !important; }
+    body.night-room .step-card.active { background: rgba(242,184,114,0.12) !important; border-color: var(--n-acc) !important; }
+    body.night-room .step-card.active .step-num { color: var(--n-acc) !important; }
+    body.night-room #sec-recovery { background: transparent !important; color: var(--n-text); }
+    body.night-room #sec-recovery .section-title, body.night-room #sec-recovery h3, body.night-room #sec-recovery h4 { color: var(--n-text) !important; }
+    body.night-room #sec-recovery .room-icon { stroke: var(--n-acc) !important; }
+    body.night-room #sec-recovery p, body.night-room #sec-recovery .q-desc { color: var(--n-sub) !important; }
+    body.night-room #sec-recovery .info-box { background: var(--n-card2) !important; border-color: var(--n-line) !important; color: var(--n-sub) !important; }
+    body.night-room #sec-recovery > div[style*="fog-blue"] { background: var(--n-card2) !important; border: 1px solid var(--n-line); }
+    body.night-room #sec-recovery > div[style*="fog-blue"] > div { color: var(--n-text) !important; }
+    body.night-room #sec-recovery > div[style*="fog-blue"] .ic { stroke: var(--n-acc); }
+    body.night-room #audio-toggle-btn { background: transparent !important; border: 1px solid var(--n-acc) !important; color: var(--n-acc) !important; min-height: 40px; border-radius: 20px !important; padding: 6px 16px !important; }
+    body.night-room .therapy-btn { background: var(--n-chip) !important; border-color: var(--n-line) !important; color: var(--n-text) !important; min-height: 44px; }
+    body.night-room .therapy-btn.active { background: var(--n-acc) !important; border-color: var(--n-acc) !important; color: var(--n-acc-text) !important; }
+    body.night-room .therapy-panel { background: var(--n-card) !important; border-color: var(--n-line) !important; border-radius: 20px; }
+    body.night-room #sec-recovery .ic-badge { background: var(--n-chip) !important; color: var(--n-acc) !important; }
+    body.night-room #sec-recovery .caution-note { background: rgba(242,184,114,0.10) !important; border-color: rgba(242,184,114,0.35) !important; color: var(--n-text) !important; }
+    body.night-room .breath-bubble { background: radial-gradient(circle, #f7cf98 0, #e9a868 55%, #c98a55 100%) !important; color: var(--n-acc-text) !important; box-shadow: 0 0 60px rgba(242,184,114,0.45) !important; font-family: var(--font-head); }
+    body.night-room .breath-bubble.hold { background: radial-gradient(circle, #fbe2b8 0, #f2c07c 60%, #d9995c 100%) !important; }
+    body.night-room #breath-action { color: var(--n-text) !important; }
+    body.night-room #sec-recovery .submit-btn { background: var(--n-acc) !important; background-image: none !important; color: var(--n-acc-text) !important; box-shadow: 0 6px 18px rgba(242,184,114,0.25) !important; }
+    body.night-room #sec-recovery .interactive-card, body.night-room #sec-recovery .step-box { background: var(--n-card2) !important; border-color: var(--n-line) !important; color: var(--n-text) !important; }
+    body.night-room #sec-recovery input, body.night-room #sec-recovery textarea { background: var(--n-bg) !important; border-color: var(--n-line) !important; color: var(--n-text) !important; }
+    body.night-room #sec-recovery input::placeholder, body.night-room #sec-recovery textarea::placeholder { color: #9a9385; }
+    body.night-room #sec-recovery .timer-display { color: var(--n-acc) !important; }
+    body.night-room .outro-panel { background: var(--n-card2) !important; border: 1px solid var(--n-line); box-shadow: none !important; }
+    body.night-room .outro-text { color: var(--n-text) !important; text-shadow: none !important; }
+    body.night-room .outro-btn { background: var(--n-chip) !important; background-image: none !important; border: 1px solid var(--n-line) !important; color: var(--n-text) !important; box-shadow: none !important; }
+    body.night-room .stories { background: var(--n-card2) !important; border-color: var(--n-line) !important; }
+    body.night-room .stories-head .ic-badge { background: var(--n-chip) !important; color: var(--n-acc) !important; }
+    body.night-room .stories-sub, body.night-room .story-empty, body.night-room #sec-recovery .note-text { color: var(--n-sub) !important; }
+    body.night-room #sec-recovery [style*="color: #64748b"], body.night-room #sec-recovery [style*="color:#64748b"], body.night-room #sec-recovery [style*="soft-denim"] { color: var(--n-sub) !important; }
+    body.night-room .story-empty, body.night-room .story-card { background: var(--n-bg) !important; border-color: var(--n-line) !important; color: var(--n-text) !important; }
+    body.night-room .stories .cbt-action-btn { background: var(--n-acc) !important; background-image: none !important; color: var(--n-acc-text) !important; border-color: var(--n-acc) !important; }
+    body.night-room .stories .cbt-action-btn.btn-outline { background: transparent !important; color: var(--n-text) !important; border: 1px solid var(--n-line) !important; }
+    body.night-room footer, body.night-room footer * { color: var(--n-sub) !important; border-color: var(--n-line) !important; }
+    body.night-room footer { background: transparent !important; }
+    body.night-room .social-rail a, body.night-room .social-row a { background: var(--n-card2) !important; border-color: var(--n-line) !important; color: var(--n-acc) !important; box-shadow: none !important; }
+    .rest-closing { background: rgba(242,184,114,0.08); border: 1px solid rgba(242,184,114,0.28); border-radius: 18px; padding: 20px 22px; margin: 0 auto 26px; max-width: 520px; text-align: left; }
+    .rest-closing .rc-title { display: flex; align-items: center; gap: 8px; font-family: var(--font-head); font-weight: 700; font-size: 17px; color: #f2b872; margin-bottom: 8px; }
+    .rest-closing .rc-title .ic { stroke: #f2b872; margin: 0; }
+    .rest-closing p { font-size: 14.5px; line-height: 1.8; color: #f4ecdf; word-break: keep-all; margin: 0; }
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"/><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/></symbol><symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/></symbol><symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 12V6a1.5 1.5 0 0 1 3 0v5M11 11V4.5a1.5 1.5 0 0 1 3 0V11M14 11V6a1.5 1.5 0 0 1 3 0v6M17 12V9a1.5 1.5 0 0 1 3 0v5a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-2.8l-2.6-4a1.5 1.5 0 0 1 2.4-1.8L8 15"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/></symbol><symbol id="i-mountain" viewBox="0 0 24 24"><path d="M2 20l7-10 4 6 3-4 6 8z"/><circle cx="17" cy="6" r="2"/></symbol><symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></symbol><symbol id="i-clip" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM9 11h6M9 15h4"/></symbol><symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12c0-4 3-6.5 7.5-6.5 0 4-3 6.5-7.5 6.5z"/><path d="M12 14.5c0-3-2.2-5-6-5 0 3 2.2 5 6 5z"/></symbol><symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13"/><path d="M12 8C10 4 6 4 6 6.5S10 8 12 8zM12 8c2-4 6-4 6-1.5S14 8 12 8z"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol><symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h12l-2.5 4L17 12H5"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.5A8 8 0 1 1 21 12z"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol><symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 4v16M6 20h12M4 8h16"/><path d="M6 8l-3 6a3 3 0 0 0 6 0zM18 8l-3 6a3 3 0 0 0 6 0z"/></symbol><symbol id="i-medical" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></symbol><symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></symbol><symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M3 13h18"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1L19 8l-3-3L5 16z"/><path d="M14 7l3 3"/></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"/></symbol><symbol id="i-quote" viewBox="0 0 24 24"><path d="M9 7c-3 1-5 4-5 7a3 3 0 1 0 3-3M19 7c-3 1-5 4-5 7a3 3 0 1 0 3-3"/></symbol><symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol><symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor"/></symbol><symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M3 9l2.5-5 15 3L21 9"/><path d="M8 4.6L9.5 8M13 5.6l1.5 3.2"/></symbol><symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-1-.8-1.4-.8-2.4 0-1 .8-1.6 1.9-1.6H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="15" cy="7" r="1.2"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol><symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19c3-4 6-7 10-9"/></symbol></defs></svg>
@@ -2226,7 +2291,7 @@
     <section id="sec-recovery" class="content-section">
       <h2 class="section-title"><svg class="room-icon" viewBox="0 0 40 40" aria-hidden="true"><path d="M5 31V17M5 25h30v6M35 25v-4a4 4 0 0 0-4-4H17v8"/><rect x="8" y="19" width="7" height="5" rx="2"/><path d="M29 6a5 5 0 1 0 5 7 4 4 0 0 1-5-7z"/></svg><span>[침실] 긴장 내려놓기: 5가지 회복 연습</span></h2>
       <div class="info-box">
-        모든 긴장을 내려놓고 쉬는 가장 안쪽의 방입니다. 몸의 긴장을 먼저 풀면 마음도 따라옵니다. 끌리는 기법 하나만 해도 충분해요.
+        모든 긴장을 내려놓고 쉬는 가장 안쪽의 방입니다. 불은 조금만 켜둘게요. 몸의 긴장을 먼저 풀면 마음도 따라옵니다. 오늘 끌리는 기법 하나만 해도 충분해요.
       </div>
 
       <div style="background: var(--fog-blue); padding: 12px 16px; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px;">
@@ -2325,6 +2390,10 @@
       </div>
 
       <div id="outro-section" class="outro-panel">
+        <div class="rest-closing">
+          <div class="rc-title"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg>오늘의 쉼을 마치며</div>
+          <p>연습 하나를 끝냈다면, 오늘 해야 할 일은 여기까지예요. 숨 한 번 고른 만큼, 조금은 가벼워졌기를.</p>
+        </div>
         <div class="outro-text" id="outro-message"></div>
         <div class="outro-cta-wrap">
           <button type="button" class="outro-btn" onclick="resetTest()">처음부터 다시 하기</button>
@@ -2698,6 +2767,7 @@
     if (targetCard) targetCard.classList.add('active');
     if (targetSec) targetSec.classList.add('active');
 
+    document.body.classList.toggle('night-room', tabId === 'recovery');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (tabId === 'cbt') setTimeout(renderCbtSection, 80);
@@ -3473,12 +3543,24 @@
   function downloadCbtReportCard() {
     if (!isStep1Completed) return;
     showCbtToast("리포트 카드를 만들고 있습니다...");
+    // 웹폰트가 준비된 뒤 그리기 (최대 1.5초 대기)
+    if (document.fonts && !downloadCbtReportCard._fontsReady) {
+      var ready = Promise.all([
+        document.fonts.load('bold 28px "Gowun Batang"'),
+        document.fonts.load('13px "Noto Sans KR"'),
+        document.fonts.load('bold 13px "Noto Sans KR"')
+      ]);
+      var timeout = new Promise(function(r) { setTimeout(r, 1500); });
+      Promise.race([ready, timeout]).then(function() { downloadCbtReportCard._fontsReady = true; downloadCbtReportCard(); });
+      return;
+    }
 
     var canvas = document.getElementById('reportCanvas');
     var ctx = canvas.getContext('2d');
     var w = canvas.width;
     var h = canvas.height;
-    var F = '-apple-system, "Noto Sans KR", sans-serif';
+    var F = '"Noto Sans KR", -apple-system, sans-serif';
+    var FH = '"Gowun Batang", "Noto Serif KR", "Noto Serif CJK KR", serif';
 
     // 디자인 C · 따뜻한 서재
     var C = { hi: '#e0916b', mid: '#d9a441', lo: '#9bb07f', brown: '#6b4f3a', sage: '#5f7a45' };
@@ -3514,8 +3596,8 @@
     ctx.font = "bold 15px " + F;
     ctx.fillText("Space of Mind | 바운더리 직무 스트레스 자가점검", 40, 48);
     ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 26px " + F;
-    ctx.fillText((userName ? userName + '님' : '나') + "의 마음 점검 결과", 40, 90);
+    ctx.font = "bold 28px " + FH;
+    ctx.fillText((userName ? userName + '님' : '나') + "의 마음 점검 결과", 40, 92);
     ctx.fillStyle = "#ecdcc8";
     ctx.font = "14px " + F;
     ctx.fillText((currentSurveyMode === 'quick' ? '핵심 점검' : '심층 점검') + '(' + activeQuestionsList.length + '문항)' + (jobArea() ? ' · ' + JOB_MODULES[selectedJob].label : '') + "  |  " + new Date().toLocaleDateString('ko-KR'), 40, 122);
@@ -3532,12 +3614,12 @@
       ctx.fillStyle = t.bg; ctx.beginPath(); ctx.roundRect(x, ty, tw, 120, 14); ctx.fill();
       ctx.fillStyle = '#475569'; ctx.font = 'bold 13px ' + F; ctx.fillText(t.k, x + 18, ty + 30);
       if (t.type) {
-        ctx.fillStyle = t.c; ctx.font = 'bold 19px ' + F;
+        ctx.fillStyle = t.c; ctx.font = 'bold 20px ' + FH;
         wrapCanvasText(ctx, t.type, x + 18, ty + 66, tw - 36, 26);
       } else {
         var lv = lvC(t.p);
         pill(t.lv, x + tw - 58, ty + 14, '#ffffff', lv.c, 11.5);
-        ctx.fillStyle = t.c; ctx.font = 'bold 40px ' + F; ctx.fillText(t.v, x + 18, ty + 88);
+        ctx.fillStyle = t.c; ctx.font = 'bold 42px ' + FH; ctx.fillText(t.v, x + 18, ty + 88);
         var vw = ctx.measureText(t.v).width;
         ctx.font = 'bold 16px ' + F; ctx.fillText(t.u, x + 22 + vw, ty + 88);
       }
@@ -3545,7 +3627,7 @@
 
     // 영역별 막대
     ctx.fillStyle = "#1e293b";
-    ctx.font = "bold 17px " + F;
+    ctx.font = "bold 18px " + FH;
     ctx.fillText("영역별 현재 내 부하도", 40, 330);
     var lx = 40;
     [['높음 75+', C.hi], ['주의 50+', C.mid], ['안정', C.lo]].forEach(function(l) {
@@ -3574,7 +3656,7 @@
     // 생각 다시 보기
     y += 28;
     ctx.fillStyle = "#1e293b";
-    ctx.font = "bold 17px " + F;
+    ctx.font = "bold 18px " + FH;
     ctx.fillText("생각 다시 보기", 40, y);
     y += 16;
 
@@ -3587,7 +3669,7 @@
       ctx.beginPath(); ctx.roundRect(40, y, 6, ch, [12, 0, 0, 12]); ctx.fill();
       var pw = pill('#' + (idx + 1), 62, y + 12, '#ffffff', lv.c, 11.5);
       ctx.fillStyle = "#1e293b";
-      ctx.font = "bold 14px " + F;
+      ctx.font = "bold 15px " + FH;
       ctx.fillText(item.name, 70 + pw, y + 27);
       var nw = ctx.measureText(item.name).width;
       ctx.fillStyle = '#64748b'; ctx.font = '12px ' + F;
@@ -3988,12 +4070,16 @@
     if (!outroPanel) return;
     outroPanel.style.display = 'block';
 
+    var nm = userName ? userName + '님' : '';
     var outroLines = [
-      (userCompany ? userCompany + '에서 돌아오는 길, ' : '') + '오늘의 작은 쉼표가',
-      displayName() + '의 마음에 부드러운 바람이 되었기를.',
-      '남들의 시선과 수많은 역할은 잠시 내려두고,',
-      '당신의 속도대로 평안한 저녁을 보내세요.',
-      '언제든 숨이 차오를 때, 이곳에서 다시 기다릴게요.'
+      userCompany
+        ? userCompany + '에서의 하루를 마치고 ' + (nm ? '온 ' + nm + ',' : '돌아온 지금,')
+        : (nm ? '하루를 마치고 온 ' + nm + ',' : '오늘 하루를 마치고 돌아온 지금,'),
+      '누구의 눈치도 보지 않아도 되는 시간입니다.',
+      '오늘 밤은 온전히 ' + (nm ? nm : '내') + ' 편에서 보내요.',
+      '따뜻한 물 한 잔, 조금 이른 잠. 오늘은 그걸로 넉넉해요.',
+      '다시 숨이 차오르면, 이곳에서 기다릴게요.',
+      '이 방의 불은 켜져 있을 거예요.'
     ];
     document.getElementById('outro-message').innerText = outroLines.join("\n");
 
@@ -4056,7 +4142,7 @@
      INSTAGRAM_URL: 공식 인스타그램 주소를 넣으세요. 비워두면 인스타그램 버튼은 숨겨집니다.
      REVIEWS: 게시에 동의한 후기만, 식별 정보를 지운 뒤 직접 추가하세요. (예시 후기를 지어내 넣지 마세요)
        { text: '후기 내용', who: '간호사 · 20대 (선택)', space: '거실의 창가 (선택)' } */
-  var REVIEW_FORM_URL = '';
+  var REVIEW_FORM_URL = 'https://tally.so/r/KYbjvX';
   var INSTAGRAM_URL = 'https://www.instagram.com/spaceofmind_rest/';
   var REVIEWS = [];
   /* 소셜 바로가기: 주소를 비워두면 해당 버튼이 숨겨집니다. */
@@ -4802,10 +4888,10 @@
 '이야기 남기기'는 이용자의 메일 앱을 통해 발송되며, 이때 전달된 이름·연락처·내용은 답변 목적으로만 사용하고, 이용자가 요청하면 지체 없이 파기합니다.
 
 제3조의2 (후기 남기기 이용 시 처리)
-'후기 남기기'는 외부 설문 서비스(예: Tally, Google Forms)로 연결되며, 남겨주신 내용은 해당 서비스에 저장됩니다. 이름·연락처는 받지 않으며, 게시에 동의한 후기만 회사명·사람 이름 등 개인을 알아볼 수 있는 정보를 지운 뒤 익명으로 사이트나 공식 SNS에 소개합니다. 게시된 후기의 삭제를 원하시면 '이야기 남기기'로 요청해 주세요.
+'후기 남기기'는 외부 설문 서비스 Tally로 연결되며, 남겨주신 내용은 해당 서비스에 저장됩니다. 이름·연락처는 받지 않으며, 게시에 동의한 후기만 회사명·사람 이름 등 개인을 알아볼 수 있는 정보를 지운 뒤 익명으로 사이트나 공식 SNS에 소개합니다. 게시된 후기의 삭제를 원하시면 '이야기 남기기'로 요청해 주세요.
 
 제4조 (외부 서비스 이용)
-그래프 표시와 PDF 리포트 생성을 위해 외부 CDN(jsDelivr, cdnjs)에서 Chart.js와 html2pdf.js 라이브러리를 불러옵니다. PDF는 이용자 기기 안에서 만들어지며 서버로 전송되지 않습니다. 이 과정에서 해당 업체가 접속 정보(IP 등)를 처리할 수 있습니다. 본 서비스는 별도의 쿠키나 행동 추적 도구를 사용하지 않습니다. 다만 '쉼의 서재'의 외부 서점 링크(제휴 링크 포함)를 누르면 해당 서점이 자체 정책에 따라 쿠키 등을 사용할 수 있습니다.
+그래프 표시와 PDF 리포트 생성을 위해 외부 CDN(jsDelivr, cdnjs)에서 Chart.js와 html2pdf.js 라이브러리를, 글꼴 표시를 위해 Google Fonts에서 웹폰트를 불러옵니다. PDF는 이용자 기기 안에서 만들어지며 서버로 전송되지 않습니다. 이 과정에서 해당 업체가 접속 정보(IP 등)를 처리할 수 있습니다. 본 서비스는 별도의 쿠키나 행동 추적 도구를 사용하지 않습니다. 다만 '쉼의 서재'의 외부 서점 링크(제휴 링크 포함)를 누르면 해당 서점이 자체 정책에 따라 쿠키 등을 사용할 수 있습니다.
 
 제5조 (개인정보 처리방침의 변경)
 본 방침은 관련 법령이나 서비스 정책 변경에 따라 수정될 수 있으며, 변경 시 웹페이지를 통해 공지합니다.
