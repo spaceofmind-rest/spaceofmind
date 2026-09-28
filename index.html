@@ -1602,9 +1602,12 @@
     .stories-sub { font-size: 13px; color: #64748b; line-height: 1.6; word-break: keep-all; }
     .story-list { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
     .story { flex: 0 0 82%; max-width: 320px; scroll-snap-align: start; background: #fbf8f3; border: 1px solid #efe6d8; border-radius: 14px; padding: 16px; }
-    .story-text { font-size: 14px; line-height: 1.75; color: #4b4237; word-break: keep-all; }
-    .story-text::before { content: "“"; font-size: 26px; line-height: 0; vertical-align: -9px; color: var(--accent); margin-right: 2px; }
-    .story-meta { margin-top: 10px; font-size: 12.5px; color: #7c6a55; }
+    .story-top { margin-bottom: 10px; }
+    .story-who { font-size: 14px; font-weight: 700; color: #2d2926; }
+    .story-room { font-size: 12.5px; color: #7a6558; margin-top: 2px; }
+    .story-text { font-size: 14px; line-height: 1.8; color: #2e2a26; word-break: keep-all; }
+    .story-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+    .story-tag { display: inline-block; background: #efe6d8; border-radius: 20px; padding: 4px 11px; font-size: 12px; color: #5c4e42; font-weight: 500; }
     .story-empty { flex: 1; text-align: center; padding: 22px 12px; background: #f8fafc; border: 1px dashed var(--border-color); border-radius: 14px; font-size: 14px; color: #475569; line-height: 1.7; }
     .stories-cta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
     .stories-cta .ic { margin-right: 4px; }
@@ -2404,8 +2407,6 @@
         <div class="outro-cta-wrap">
           <button type="button" class="outro-btn" onclick="resetTest()">처음부터 다시 하기</button>
           <button type="button" class="outro-btn" onclick="shareResult()">소중한 이에게 쉼표 선물</button>
-          <button type="button" class="outro-btn" onclick="openLibrary()">쉼의 서재 둘러보기</button>
-        <button type="button" class="outro-btn" id="support-btn" onclick="openSupport()" style="background:rgba(242,184,114,0.18);border:1px solid rgba(242,184,114,0.45);color:#f2b872;display:none"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>따뜻한 차 한 잔</button>
         </div>
       </div>
 
@@ -2421,7 +2422,6 @@
         <div class="story-list" id="story-list"></div>
         <div class="stories-cta">
           <button type="button" class="cbt-action-btn" onclick="openReviewForm()"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>후기 남기기</button>
-          <button type="button" class="cbt-action-btn btn-outline insta-btn" onclick="openInstagram()"><svg class="ic" aria-hidden="true"><use href="#i-insta"/></svg>인스타그램에서 소식 받기</button>
         </div>
         <div class="note-text" style="margin-top:10px;">후기는 이름이나 연락처 없이 남길 수 있어요. 남겨주신 이야기는 쉼지기가 읽고, 게시에 동의해 주신 경우에만 회사명·사람 이름 같은 정보를 지운 뒤 소개합니다.</div>
       </div>
@@ -3516,7 +3516,7 @@
     lines.push('');
     lines.push('Ref: KOSS (Chang et al., 2005) · Beck CBT · Rosenberg NVC');
     lines.push('© 2026 Space of Mind | Self-assessment for personal reflection, not a clinical diagnosis');
-    lines.push('링크: ' + window.location.href.split('#')[0]);
+    lines.push('링크: ' + 'https://spaceofmind.kr');
 
     copyText(lines.join("\n"), "요약 텍스트를 복사했습니다.");
   }
@@ -4109,11 +4109,7 @@
   }
 
   function shareResult() {
-    var shareUrl = window.location.href.split('#')[0];
-    if (navigator.share) {
-      navigator.share({ title: 'Space of Mind 바운더리', text: '퇴근길에 마음 점검 한 번 해봐요.', url: shareUrl }).catch(function() {});
-      return;
-    }
+    var shareUrl = 'https://spaceofmind.kr';
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(shareUrl).then(function() {
         openShareModal(shareUrl);
@@ -4192,12 +4188,12 @@
         var roomLabel = r.space ? r.space + '에서 쉬어갔어요' : '';
         var tags = [];
         if (r.space) tags.push('<span class="story-tag">' + escapeHtml(emoji + '\u00a0' + r.space) + '</span>');
-        tags.push('<span class="story-tag">🤍 도움이 됐어요</span>');
+        tags.push('<span class="story-tag">' + escapeHtml('🌱\u00a0' + (r.feel || '위로받았어요')) + '</span>');
         return '<div class="story">' +
-          '<div class="story-top"><div class="story-avatar">' + emoji + '</div>' +
-          '<div><div class="story-who">' + escapeHtml(r.who || '익명') + '</div>' +
+          '<div class="story-top">' +
+          '<div class="story-who">' + escapeHtml(r.who || '익명') + '</div>' +
           (roomLabel ? '<div class="story-room">' + escapeHtml(roomLabel) + '</div>' : '') +
-          '</div></div>' +
+          '</div>' +
           '<div class="story-text">' + escapeHtml(r.text) + '</div>' +
           '<div class="story-tags">' + tags.join('') + '</div></div>';
       }).join('');
