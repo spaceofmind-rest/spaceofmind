@@ -1615,8 +1615,8 @@
     .social-rail .x-mark, .social-row .x-mark { font-size: 17px; font-weight: 800; font-family: Arial, sans-serif; line-height: 1; }
     .social-row { display: flex; justify-content: center; gap: 10px; margin: 10px 0 12px; }
     .social-row:empty { display: none; }
-    .social-row a { width: 38px; height: 38px; box-shadow: none; }
-    @media (min-width: 1100px) { .social-rail.has-links { display: flex; } }
+    .social-row a { width: 38px; height: 38px; box-shadow: none; display: inline-flex; align-items: center; justify-content: center; }
+    @media (min-width: 1100px) { .social-rail.has-links { display: none; } }
     .insta-strip { width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; margin-top: 14px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border-color); background: #f8fbff; cursor: pointer; color: var(--soft-denim); }
     .insta-strip b { display: block; font-size: 14px; color: #1e293b; }
     .insta-strip span span { font-size: 13px; color: #64748b; }
@@ -1766,7 +1766,12 @@
     body.night-room .stories-head .ic-badge { background: var(--n-chip) !important; color: var(--n-acc) !important; }
     body.night-room .stories-sub, body.night-room .story-empty, body.night-room #sec-recovery .note-text { color: var(--n-sub) !important; }
     body.night-room #sec-recovery [style*="color: #64748b"], body.night-room #sec-recovery [style*="color:#64748b"], body.night-room #sec-recovery [style*="soft-denim"] { color: var(--n-sub) !important; }
-    body.night-room .story-empty, body.night-room .story-card { background: var(--n-bg) !important; border-color: var(--n-line) !important; color: var(--n-text) !important; }
+    body.night-room .story-empty, body.night-room .story-card, body.night-room .story { background: rgba(255,255,255,0.07) !important; border-color: rgba(255,255,255,0.13) !important; }
+    body.night-room .story-who { color: #f4ece3 !important; font-weight: 700; }
+    body.night-room .story-room { color: #c9b9a8 !important; }
+    body.night-room .story-text { color: #ede4da !important; }
+    body.night-room .story-tags .story-tag { background: rgba(255,255,255,0.10) !important; color: #c9b9a8 !important; }
+    body.night-room .story-avatar { background: rgba(242,184,114,0.18) !important; }
     body.night-room .stories .cbt-action-btn { background: var(--n-acc) !important; background-image: none !important; color: var(--n-acc-text) !important; border-color: var(--n-acc) !important; }
     body.night-room .stories .cbt-action-btn.btn-outline { background: transparent !important; color: var(--n-text) !important; border: 1px solid var(--n-line) !important; }
     body.night-room footer, body.night-room footer * { color: var(--n-sub) !important; border-color: var(--n-line) !important; }
@@ -1831,7 +1836,7 @@
         <button type="button" class="footer-link-btn" onclick="openFooterModal('intent')">기획의도 · 만든 사람</button>
         <span class="footer-sep">·</span>
         <button type="button" class="footer-link-btn" onclick="openLibrary()">쉼의 서재 (추천 도서)</button>
-        <button type="button" class="footer-link-btn footer-support" onclick="openSupport()" style="display:none">🍵 따뜻한 차 한 잔으로 응원하기</button>
+        <button type="button" class="footer-link-btn footer-support" onclick="openSupport()" style="display:none"><svg class="ic" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M6 2c0 0 .5 1.5 0 3"/><path d="M10 2c0 0 .5 1.5 0 3"/><path d="M14 2c0 0 .5 1.5 0 3"/><path d="M4 8h12v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M2 21h16"/></svg>따뜻한 차 한 잔으로 응원하기</button>
       </div>
       <div class="social-row"></div>
       <div style="font-weight: 600; margin-bottom: 3px;">&copy; 2026 Space of Mind. All rights reserved.</div>
@@ -2431,7 +2436,7 @@
         <button type="button" class="footer-link-btn" onclick="openFooterModal('intent')">기획의도 · 만든 사람</button>
         <span class="footer-sep">·</span>
         <button type="button" class="footer-link-btn" onclick="openLibrary()">쉼의 서재 (추천 도서)</button>
-        <button type="button" class="footer-link-btn footer-support" onclick="openSupport()" style="display:none">🍵 따뜻한 차 한 잔으로 응원하기</button>
+        <button type="button" class="footer-link-btn footer-support" onclick="openSupport()" style="display:none"><svg class="ic" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M6 2c0 0 .5 1.5 0 3"/><path d="M10 2c0 0 .5 1.5 0 3"/><path d="M14 2c0 0 .5 1.5 0 3"/><path d="M4 8h12v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M2 21h16"/></svg>따뜻한 차 한 잔으로 응원하기</button>
       </div>
       <div class="social-row"></div>
       <div class="crisis-line"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>지금 많이 힘들다면: 정신건강위기상담 1577-0199 · 자살예방상담 109 (24시간)</div>
@@ -4152,7 +4157,7 @@
   var REVIEWS_CSV_URL = '';
   var SUPPORT_URL = 'https://ctee.kr/place/spaceofmind';
   var REVIEWS = [
-    { text: '제 현재 상황에 대입해서 대화들을 대입해서 연습할때 실제로 좀 울컥해서 눈물이 났어요. 실제로 사용할 수 있으려면 많은 용기가 필요할것 같아요. 이 공간만으로 큰 위로가 되었습니다. 만들어주셔서 감사합니다.', who: '영상업계 · 30대', space: '단단한 서재' }
+    { text: '제 현재 상황에 대입해서 대화들을 연습할때 실제로 좀 울컥해서 눈물이 났어요. 실제로 사용할 수 있으려면 시간과 많은 용기가 필요할것 같아요. 이 공간만으로 큰 위로가 되었습니다. 만들어주셔서 감사합니다.', who: '영상업계 · 30대', space: '단단한 서재' }
   ];
   /* 소셜 바로가기: 주소를 비워두면 해당 버튼이 숨겨집니다. */
   var X_URL = '';
@@ -4161,12 +4166,17 @@
     var links = [];
     if (INSTAGRAM_URL) links.push('<a href="' + INSTAGRAM_URL + '" target="_blank" rel="noopener" aria-label="인스타그램" title="인스타그램"><svg aria-hidden="true"><use href="#i-insta"/></svg></a>');
     if (X_URL) links.push('<a href="' + X_URL + '" target="_blank" rel="noopener" aria-label="X" title="X"><span class="x-mark" aria-hidden="true">X</span></a>');
+    var penSvg = '<svg aria-hidden="true" style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><use href="#i-pen"/></svg>';
+    var reviewBtn = REVIEW_FORM_URL ? '<a href="' + REVIEW_FORM_URL + '" target="_blank" rel="noopener" aria-label="후기 남기기" title="후기 남기기">' + penSvg + '</a>' : '';
+    var coffeeSvg = '<svg aria-hidden="true" style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M6 2c0 0 .5 1.5 0 3"/><path d="M10 2c0 0 .5 1.5 0 3"/><path d="M14 2c0 0 .5 1.5 0 3"/><path d="M4 8h12v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M2 21h16"/></svg>';
+    var supportBtn = SUPPORT_URL ? '<a href="' + SUPPORT_URL + '" target="_blank" rel="noopener" aria-label="따뜻한 차 한 잔으로 응원하기" title="따뜻한 차 한 잔으로 응원하기">' + coffeeSvg + '</a>' : '';
     var html = links.join('');
+    var htmlWithReview = reviewBtn + html;
     var sb=document.getElementById('support-btn');if(sb)sb.style.display=SUPPORT_URL?'':'none';
     document.querySelectorAll('.footer-support').forEach(function(b){b.style.display=SUPPORT_URL?'':'none';});
     var rail = document.querySelector('.social-rail');
     if (rail) { rail.innerHTML = html; rail.classList.toggle('has-links', links.length > 0); }
-    document.querySelectorAll('.social-row').forEach(function(r) { r.innerHTML = html; });
+    document.querySelectorAll('.social-row').forEach(function(r) { r.innerHTML = htmlWithReview; });
   }
 
   function renderStories() {
@@ -4175,9 +4185,21 @@
     if (!REVIEWS.length) {
       box.innerHTML = '<div class="story-empty">아직 남겨진 이야기가 없어요.<br>이곳에서 잠시 쉬어가셨다면, 첫 후기를 남겨주세요.</div>';
     } else {
-      box.innerHTML = REVIEWS.map(function(r) {
-        var meta = [r.who, r.space ? r.space + (((r.space.charCodeAt(r.space.length - 1) - 0xAC00) % 28) ? '이' : '가') + ' 도움이 됐어요' : ''].filter(Boolean).join(' · ');
-        return '<div class="story"><div class="story-text">' + escapeHtml(r.text) + '</div>' + (meta ? '<div class="story-meta">' + escapeHtml(meta) + '</div>' : '') + '</div>';
+      var spaceEmoji = {'복도':'🚪','거실':'🛋️','단단한 서재':'📚','쉼의 서재':'📚','침실':'🌙','안쪽의 침실':'🌙'};
+      var avatarList = ['🌙','🌿','🍃','🌱','✨','🫧','🍵'];
+      box.innerHTML = REVIEWS.map(function(r, i) {
+        var emoji = spaceEmoji[r.space] || avatarList[i % avatarList.length];
+        var roomLabel = r.space ? r.space + '에서 쉬어갔어요' : '';
+        var tags = [];
+        if (r.space) tags.push('<span class="story-tag">' + escapeHtml(emoji + '\u00a0' + r.space) + '</span>');
+        tags.push('<span class="story-tag">🤍 도움이 됐어요</span>');
+        return '<div class="story">' +
+          '<div class="story-top"><div class="story-avatar">' + emoji + '</div>' +
+          '<div><div class="story-who">' + escapeHtml(r.who || '익명') + '</div>' +
+          (roomLabel ? '<div class="story-room">' + escapeHtml(roomLabel) + '</div>' : '') +
+          '</div></div>' +
+          '<div class="story-text">' + escapeHtml(r.text) + '</div>' +
+          '<div class="story-tags">' + tags.join('') + '</div></div>';
       }).join('');
     }
     document.querySelectorAll('.insta-btn').forEach(function(b) { b.style.display = INSTAGRAM_URL ? '' : 'none'; });
@@ -4195,6 +4217,11 @@
 
   function openInstagram() {
     if (INSTAGRAM_URL) window.open(INSTAGRAM_URL, '_blank', 'noopener');
+  }
+
+  function scrollToReviews() {
+    var el = document.getElementById('stories');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function parseCsv(text) {
