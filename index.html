@@ -1653,6 +1653,14 @@
     .rd-foot { padding: 12px 16px calc(14px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid #efe6d8; }
     .rd-foot button { width: 100%; border: none; border-radius: 26px; padding: 13px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; background: var(--accent, #e0916b); color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .rd-foot svg { width: 18px; height: 18px; }
+    .share-card .modal-sub { word-break: keep-all; margin-bottom: 16px; }
+    .share-link-box { border: 1px solid var(--border-color); background: #f8fafc; color: #334155; border-radius: 12px; padding: 12px 14px; font-size: 15px; margin-bottom: 14px; user-select: none; -webkit-user-select: none; }
+    .share-btn { width: 100%; min-height: 50px; border-radius: 26px; font-family: inherit; font-size: 15.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 2px; margin-bottom: 10px; white-space: nowrap; }
+    .share-primary { background: var(--soft-denim); color: #fff; border: none; }
+    .share-secondary { background: #fff; color: var(--soft-denim); border: 1.5px solid #cdd8e6; }
+    .share-secondary.done { border-color: #9cc5a8; color: #3b7a4d; }
+    .share-ok { min-height: 20px; font-size: 13px; color: #3b7a4d; margin: -2px 0 4px; }
+    .share-close { background: none; border: none; color: #64748b; font-family: inherit; font-size: 14px; padding: 8px 16px; cursor: pointer; }
     .social-rail { position: fixed; left: 18px; top: 50%; transform: translateY(-50%); z-index: 500; display: none; flex-direction: column; gap: 10px; }
     .social-rail a, .social-row a { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: #fff; border: 1px solid var(--border-color); color: var(--soft-denim); box-shadow: 0 4px 12px rgba(74,95,126,0.10); text-decoration: none; transition: transform .15s ease, background .15s ease; }
     .social-rail a:hover, .social-row a:hover { transform: translateY(-2px); background: var(--fog-blue); }
@@ -2579,19 +2587,15 @@
 </div>
 
 <div class="modal-overlay" id="share-modal" onclick="if(event.target === this) closeShareModal()">
-  <div class="modal-card" style="text-align: center;">
+  <div class="modal-card share-card" style="text-align: center;">
     <div style="margin-bottom:8px;"><svg class="ic-xl" aria-hidden="true"><use href="#i-gift"/></svg></div>
     <div class="modal-title">소중한 이에게 쉼표 선물하기</div>
-    <div class="modal-sub">링크가 클립보드에 복사되었습니다.<br>동료나 지인에게 붙여넣어 공유해 보세요. (내 결과는 링크에 포함되지 않습니다.)</div>
-
-    <div style="display: flex; gap: 8px; margin-bottom: 20px;">
-      <input type="text" id="share-url-input" readonly aria-label="공유 링크" style="flex: 1; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 10px; background: #f8fafc; font-size: 13px; color: #334155; outline: none;">
-      <button type="button" onclick="copyInputUrl()" style="background: var(--soft-denim); color: white; border: none; padding: 0 16px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer;">복사</button>
-    </div>
-
-    <div class="modal-btn-wrap">
-      <button type="button" class="submit-btn" style="margin-top: 0; max-width: 100%; background: var(--soft-denim);" onclick="closeShareModal()">확인</button>
-    </div>
+    <div class="modal-sub">오늘 쉼이 필요해 보이는 사람에게 보내 보세요.<br>내 결과는 링크에 담기지 않아요.</div>
+    <div class="share-link-box">spaceofmind.kr</div>
+    <button type="button" class="share-btn share-primary" id="share-native-btn" onclick="shareNative()" style="display:none"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>카카오톡·메시지로 보내기</button>
+    <button type="button" class="share-btn share-secondary" id="share-copy-btn" onclick="copyShareLink()"><svg class="ic" aria-hidden="true"><use href="#i-clip"/></svg><span>링크 복사하기</span></button>
+    <div class="share-ok" id="share-ok" aria-live="polite"></div>
+    <button type="button" class="share-close" onclick="closeShareModal()">닫기</button>
   </div>
 </div>
 
@@ -4159,34 +4163,60 @@
     window.location.reload();
   }
 
+  var SHARE_URL = 'https://spaceofmind.kr';
+  var SHARE_TEXT = '오늘 하루도 버티느라 수고 많았어요. 퇴근길에 잠깐 마음 한 번 들여다봐요.';
+  function canNativeShare() {
+    return !!navigator.share && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  }
   function shareResult() {
-    var shareUrl = 'https://spaceofmind.kr';
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(shareUrl).then(function() {
-        openShareModal(shareUrl);
-      }).catch(function() { openShareModal(shareUrl); });
-    } else {
-      openShareModal(shareUrl);
-    }
-  }
-
-  function openShareModal(url) {
-    document.getElementById('share-url-input').value = url;
+    var nativeBtn = document.getElementById('share-native-btn');
+    var copyBtn = document.getElementById('share-copy-btn');
+    var mobile = canNativeShare();
+    nativeBtn.style.display = mobile ? '' : 'none';
+    copyBtn.classList.toggle('share-primary', !mobile);
+    copyBtn.classList.toggle('share-secondary', mobile);
+    resetShareCopy();
     document.getElementById('share-modal').classList.add('active');
+    if (!mobile) copyShareLink();
   }
-
+  function shareNative() {
+    navigator.share({ title: 'Space of Mind', text: SHARE_TEXT, url: SHARE_URL }).then(function() {
+      closeShareModal();
+      showCbtToast('쉼표를 선물했어요.');
+    }).catch(function() {});
+  }
+  function resetShareCopy() {
+    var btn = document.getElementById('share-copy-btn');
+    btn.classList.remove('done');
+    btn.querySelector('span').textContent = '링크 복사하기';
+    document.getElementById('share-ok').textContent = '';
+  }
+  function markShareCopied() {
+    var btn = document.getElementById('share-copy-btn');
+    btn.classList.add('done');
+    btn.querySelector('span').textContent = '복사됐어요';
+    document.getElementById('share-ok').textContent = '붙여넣기만 하면 돼요.';
+  }
+  function copyShareLink() {
+    var done = function() { markShareCopied(); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(SHARE_URL).then(done).catch(function() { legacyCopy(SHARE_URL) && done(); });
+    } else if (legacyCopy(SHARE_URL)) { done(); }
+  }
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:-1000px;opacity:0;';
+    document.body.appendChild(ta); ta.select();
+    var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    if (!ok) showCbtToast('복사가 안 됐어요. spaceofmind.kr 을 직접 적어 보내 주세요.');
+    return ok;
+  }
+  function openShareModal() { shareResult(); }
   function closeShareModal() {
     var modal = document.getElementById('share-modal');
     if (modal) modal.classList.remove('active');
-  }
-
-  function copyInputUrl() {
-    var el = document.getElementById('share-url-input');
-    if (el) {
-      el.select();
-      el.setSelectionRange(0, 99999);
-      copyText(el.value, "링크를 복사했습니다.");
-    }
   }
 
   loadScenario();
